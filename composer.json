@@ -1,0 +1,27 @@
+{
+    "name": "songzhp/log",
+    "description": "laravel 日志",
+    "type": "library",
+    "authors": [
+        {
+            "name": "雷行",
+            "email": "songzhp@yoozoo.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Youzu\\Log\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Youzu\\Log\\LogServiceProvider"
+            ],
+            "aliases": {
+                "YouzuLog": "Youzu\\Log\\Facades\\Log"
+            }
+        }
+    }
+}

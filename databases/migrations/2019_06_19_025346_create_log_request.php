@@ -23,7 +23,7 @@ class CreateLogRequest extends Migration
             $table->string('ip');
             $table->string('host');
             $table->string('method');
-            $table->string('request')->nullable();
+            $table->text('request')->nullable();
             $table->string('response');
             $table->timestamps();
         });

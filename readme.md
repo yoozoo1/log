@@ -23,7 +23,7 @@ laravel应用记录MySQL日志、请求日志、异常信息等。
 
 或者
 ```bash
->_ composer config repo.emp vcs https://gitlab.uuzu.com/songzhp/log.git
+>_ composer config repo.log vcs https://gitlab.uuzu.com/songzhp/log.git
 >_ composer require songzhp/log
 ```
 

@@ -80,6 +80,7 @@ class Logger
                 $duration = $this->formatDuration($query->time / 1000);
 
                 if (config('app.debug')) {
+                    $sql = '[' . $duration . '] ' . $sql;
                     Log::debug($sql);
                     continue;
                 }

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class LogDb extends Model
 {
     protected $fillable = [
-        'user_id', 'type', 'ip', 'url', 'content',
+        'user_id', 'type', 'ip', 'url', 'content', 'duration',
     ];
 }

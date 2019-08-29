@@ -137,9 +137,10 @@ class Logger
             }
         }
 
-        $sql = str_replace(array('%', '?'), array('%%', '%s'), $query->sql);
-        $sql = vsprintf($sql, $query->bindings);
-        return $sql;
+        $duration = $this->formatDuration($query->time / 1000);
+        $sql      = str_replace(array('%', '?'), array('%%', '%s'), $query->sql);
+        $sql      = vsprintf($sql, $query->bindings);
+        return '[' . $duration . '] ' . $sql;
     }
 
     /**
@@ -202,5 +203,22 @@ class Logger
     public function setUserResolve(Closure $callback)
     {
         $this->userResolve = $callback;
+    }
+
+    /**
+     * Format duration.
+     *
+     * @param float $seconds
+     *
+     * @return string
+     */
+    private function formatDuration($seconds)
+    {
+        if ($seconds < 0.001) {
+            return round($seconds * 1000000) . 'μs';
+        } elseif ($seconds < 1) {
+            return round($seconds * 1000, 2) . 'ms';
+        }
+        return round($seconds, 2) . 's';
     }
 }

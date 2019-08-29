@@ -76,7 +76,8 @@ class Logger
 
         foreach ($this->querys as $type => $querys) {
             foreach ($querys as $query) {
-                $sql = $this->string($query);
+                $sql      = $this->string($query);
+                $duration = $this->formatDuration($query->time / 1000);
 
                 if (config('app.debug')) {
                     Log::debug($sql);
@@ -84,11 +85,12 @@ class Logger
                 }
 
                 $log = [
-                    'user_id' => $this->getUserId(),
-                    'type'    => $type,
-                    'ip'      => $ip,
-                    'url'     => $url,
-                    'content' => $sql,
+                    'user_id'  => $this->getUserId(),
+                    'type'     => $type,
+                    'ip'       => $ip,
+                    'url'      => $url,
+                    'content'  => $sql,
+                    'duration' => $duration,
                 ];
                 LogDb::create($log);
             }
@@ -108,6 +110,9 @@ class Logger
             foreach ($querys as $query) {
                 $sql = $this->string($query);
 
+                $duration = $this->formatDuration($query->time / 1000);
+
+                $sql = '[' . $duration . '] ' . $sql;
                 if (config('app.debug')) {
                     Log::debug($sql);
                     continue;
@@ -137,10 +142,9 @@ class Logger
             }
         }
 
-        $duration = $this->formatDuration($query->time / 1000);
-        $sql      = str_replace(array('%', '?'), array('%%', '%s'), $query->sql);
-        $sql      = vsprintf($sql, $query->bindings);
-        return '[' . $duration . '] ' . $sql;
+        $sql = str_replace(array('%', '?'), array('%%', '%s'), $query->sql);
+        $sql = vsprintf($sql, $query->bindings);
+        return $sql;
     }
 
     /**

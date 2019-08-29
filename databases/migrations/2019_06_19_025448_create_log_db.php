@@ -20,6 +20,7 @@ class CreateLogDb extends Migration
             $table->string('ip');
             $table->string('url');
             $table->string('content');
+            $table->string('duration');
             $table->timestamps();
         });
     }

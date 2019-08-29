@@ -20,8 +20,8 @@ class CreateLogRequest extends Migration
             $table->string('deviceId');
             $table->string('version');
             $table->string('agent');
-            $table->string('ip');
-            $table->string('host');
+            $table->string('ip')->nullable();
+            $table->string('host')->nullable();
             $table->string('method');
             $table->text('request')->nullable();
             $table->string('response');

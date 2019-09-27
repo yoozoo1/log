@@ -32,7 +32,7 @@ class Logger
             'url'      => $request->path(),
             'deviceId' => $request->header('DeviceId', ''),
             'version'  => $request->header('Version', ''),
-            'agent'    => $request->server->get('HTTP_USER_AGENT'),
+            'agent'    => $request->server->get('HTTP_USER_AGENT', 'robots'),
             'ip'       => $request->ip(),
             'host'     => $request->server->get('SERVER_ADDR'),
             'method'   => $request->method(),

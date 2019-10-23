@@ -54,13 +54,13 @@ class Logger
     {
         $filterTables = config('log.filter.tables');
         DB::listen(function ($query) use ($filterTables) {
-            if (!empty($filterTables) && $this->filterWithTable($query->sql, $filterTables)) {
-                return;
-            }
 
             $types = ['insert', 'update', 'delete'];
             $type  = substr($query->sql, 0, 6);
             if (in_array($type, $types) || config('app.debug')) {
+                if (!empty($filterTables) && $this->filterWithTable($query->sql, $filterTables)) {
+                    return;
+                }
                 $this->querys[$type][] = $query;
             }
         });

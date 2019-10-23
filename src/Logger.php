@@ -52,12 +52,38 @@ class Logger
      */
     public function listenDB()
     {
-        DB::listen(function ($query) {
-            $type = substr($query->sql, 0, 6);
-            if ($type == 'insert' || $type == 'update' || $type == 'delete' || config('app.debug')) {
+        $filterTables = config('log.filter.tables');
+        DB::listen(function ($query) use ($filterTables) {
+            if (!empty($filterTables) && $this->filterWithTable($query->sql, $filterTables)) {
+                return;
+            }
+
+            $types = ['insert', 'update', 'delete'];
+            $type  = substr($query->sql, 0, 6);
+            if (in_array($type, $types) || config('app.debug')) {
                 $this->querys[$type][] = $query;
             }
         });
+    }
+
+    /**
+     * 按表名进行过滤
+     *
+     * @method  filterWithTable
+     * @author  雷行  songzhp@yoozoo.com  2019-10-23T09:45:39+0800
+     * @param   string           $sql           当前查询语句
+     * @param   array            $filterTables  要过滤的表名
+     * @return  boolean
+     */
+    public function filterWithTable($sql, $filterTables)
+    {
+
+        $result = preg_match('/\`([^\`]*)\`/', $sql, $matched);
+        if ($result) {
+            $table = $matched[1];
+            return in_array($table, $filterTables);
+        }
+        return false;
     }
 
     /**

@@ -17,7 +17,7 @@ class CreateLogExceptions extends Migration
             $table->increments('id');
             $table->string('level');
             $table->string('line');
-            $table->string('content');
+            $table->text('content');
             $table->timestamps();
         });
     }

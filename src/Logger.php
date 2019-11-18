@@ -36,11 +36,31 @@ class Logger
             'ip'       => $request->ip(),
             'host'     => $request->server->get('SERVER_ADDR'),
             'method'   => $request->method(),
-            'request'  => $request->isMethod('get') ? $request->getQueryString() : http_build_query($request->post()),
+            'request'  => $request->isMethod('get')
+            ? $request->getQueryString()
+            : http_build_query($this->removePasswordFormPost($request->post())),
             'response' => $response->getStatusCode(),
         ];
 
         return LogRequest::create($log);
+    }
+
+    /**
+     * 不记录POST请求中的密码项
+     *
+     * @method  removePasswordFormPost
+     * @author  雷行  songzhp@yoozoo.com  2019-11-18T15:57:49+0800
+     * @param   array                  $post
+     * @return  array
+     */
+    private function removePasswordFormPost($post)
+    {
+        foreach ($post as $key => $value) {
+            if (preg_match('/password/', $key)) {
+                unset($post[$key]);
+            }
+        }
+        return $post;
     }
 
     /**

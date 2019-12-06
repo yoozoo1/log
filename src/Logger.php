@@ -272,4 +272,16 @@ class Logger
         }
         return round($seconds, 2) . 's';
     }
+
+    /**
+     * 手动清除已记录的SQL
+     *
+     * @method  cleanQuery
+     * @author  雷行  songzhp@yoozoo.com  2019-12-06T15:14:56+0800
+     * @return  void
+     */
+    public function cleanQuery()
+    {
+        $this->querys = [];
+    }
 }

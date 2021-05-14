@@ -1,2 +1,15 @@
 核心数据库平台延迟过高，内部数据存储分散
 交互信息缓慢，排查结果如下：
+
+2021.2.12
+http://www.youzu.com/
+http://king.youzu.com/hot.html
+http://service.youzu.com/
+http://mm2.youzu.com/
+http://d.youzu.com/
+
+2021.5.1
+数仓数据用户信息1635245个，暂时存储至：
+39.96.64.7/database_user.zip
+
+
